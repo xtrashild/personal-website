@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/HeroSection";
 import { Navbar } from "@/components/Navbar";
 import { ProjectsSection } from "@/components/ProjectsSection";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkillsSection } from "@/components/SkillsSection";
 import { StartBackground } from "@/components/StarBackground";
 
@@ -25,6 +26,7 @@ export const Home = () => {
 
       {/* Footer */}
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

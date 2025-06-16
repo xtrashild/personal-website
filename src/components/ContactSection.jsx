@@ -1,8 +1,8 @@
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import emailjs from "@emailjs/browser";
 import { faXing } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import emailjs from "emailjs-com";
 import { Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
 
@@ -31,7 +31,7 @@ export const ContactSection = () => {
           title: "Error!",
           description:
             "There was an error sending your message. Please try again.",
-          variant: "destructive",
+          variant: "default",
         });
       })
       .finally(() => {

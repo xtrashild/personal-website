@@ -11,17 +11,87 @@ const navItems = [
   { name: "Contact", href: "#contact" },
 ];
 export const Navbar = () => {
+  // Theme toggle
+  const getSystemTheme = () => {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      const storedTheme = localStorage.getItem("theme");
+
+      if (!storedTheme) {
+        localStorage.setItem("theme", "system");
+        return "system";
+      }
+
+      return storedTheme;
+    }
+    return "system";
+  });
+
+  const applyTheme = (currentTheme) => {
+    if (
+      currentTheme === "dark" ||
+      (currentTheme === "system" && getSystemTheme() === "dark")
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
+  const toggleTheme = () => {
+    const themes = ["light", "dark", "system"];
+    const currentIndex = themes.indexOf(theme);
+    const nextTheme = themes[(currentIndex + 1) % 3];
+
+    setTheme(nextTheme);
+    localStorage.setItem("theme", nextTheme);
+    applyTheme(nextTheme);
+  };
+
+  useEffect(() => {
+    // Theme handler
+
+    applyTheme(theme);
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleChange = () => {
+      if (theme === "system") {
+        applyTheme(theme);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [theme]);
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isNavbarMenuOpen, setIsNavbarMenuOpen] = useState(false);
+
   useEffect(() => {
+    // Scroll handler
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
+
+    if (isNavbarMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      document.body.style.overflow = "unset";
     };
-  }, []);
+  }, [isNavbarMenuOpen]);
+
   return (
     <nav
       className={cn(
@@ -43,7 +113,7 @@ export const Navbar = () => {
           </span>
         </a>
         {/* desktop nav */}
-        <div className="hidden md:flex space-x-8 ml-8">
+        <div className="hidden md:flex space-x-8 items-center ml-8">
           {navItems.map((item, key) => {
             return (
               <a
@@ -56,7 +126,11 @@ export const Navbar = () => {
               </a>
             );
           })}
-          <ThemeToggle className="max-sm:hidden" />
+          <ThemeToggle
+            className="hidden md:block"
+            theme={theme}
+            onToggle={toggleTheme}
+          />
         </div>
         {/* mobile nav */}
         <button
@@ -91,7 +165,13 @@ export const Navbar = () => {
                 </a>
               );
             })}
-            <ThemeToggle />
+            <div className="border-t border-foreground/40 pt-4 mt-4">
+              <ThemeToggle
+                className="md:hidden z-50"
+                theme={theme}
+                onToggle={toggleTheme}
+              />
+            </div>
           </div>
         </div>
       </div>
