@@ -10,6 +10,22 @@ const projects = [
     image: "/projects/workout-express.png",
     demoUrl: "https://xtrashild.com/",
   },
+  {
+    id: 2,
+    title: "Cocktails",
+    description:
+      "A modern cocktail discovery app to explore and learn about various cocktails. Browse recipes, ingredients, and find your next favorite drink.",
+    image: "/projects/cocktails.png",
+    demoUrl: "https://cocktails-rosy.vercel.app/",
+  },
+  {
+    id: 3,
+    title: "Weather Tool",
+    description:
+      "A weather application for checking current conditions and forecasts in a city of your choice.",
+    image: "/projects/weather-tool.png",
+    demoUrl: "https://weather-tool-kappa.vercel.app/",
+  },
 ];
 
 export const ProjectsSection = () => {
@@ -24,17 +40,11 @@ export const ProjectsSection = () => {
           crafted with attention to detail, performance and user experience.
         </p>
 
-        <div
-          className={cn(
-            projects.length === 1
-              ? "flex justify-center"
-              : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          )}
-        >
+        <div className="flex flex-wrap justify-center gap-8">
           {projects.map((project, key) => (
             <a
               key={key}
-              className="group bg-card rounded-lg overflow-hidden shadow-xs card-hover"
+              className="group bg-card rounded-lg overflow-hidden shadow-xs card-hover w-full md:max-w-80 lg:max-w-72"
               href={project.demoUrl}
               target="_blank"
             >
