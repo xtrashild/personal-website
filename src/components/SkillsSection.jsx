@@ -14,7 +14,7 @@ const skills = [
 
   //   Backend Skills
   { name: "Java", level: 70, category: "backend" },
-  { name: "Springboot", level: 60, category: "backend" },
+  { name: "Spring Boot", level: 60, category: "backend" },
   { name: "Node.js", level: 80, category: "backend" },
   { name: "NestJS", level: 80, category: "backend" },
   { name: "SQL", level: 80, category: "backend" },
